@@ -35,10 +35,6 @@
                 height: 100%;
                 touch-action: none;
             }
-            /* #renderCanvas {
-                width: 500px;
-                height: 500px;
-            } */
         </style>
     </head>
 <body>
@@ -50,364 +46,68 @@
         var scene = null;
         var sceneToRender = null;
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
-        const createScene =  () => {
+        const createScene = function () {
+    
     const scene = new BABYLON.Scene(engine);
 
-    /**** Set camera and light *****/
-    const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 10, new BABYLON.Vector3(0, 0, 0));
+    const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 1.5, Math.PI / 2.2, 15, new BABYLON.Vector3(0, 0, 0));
     camera.attachControl(canvas, true);
     const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0));
 
-    // Load the sound and play it automatically once ready
-    //const music = new BABYLON.Sound("aaa", "C:/Users/Veljko/Desktop/veljko/javaScript/babylonJS/practise/aaa.wav", scene, null, { loop: true, autoplay: true });
-
-         // Load the sound, give it time to load and play it every 3 seconds
-        //  const bounce = new BABYLON.Sound("bounce", "sounds/bounce.wav", scene);
-        //  setInterval(() => bounce.play(), 3000);
-
-const box = buildBox();
-const roof = buildRoof();  
-const chimney = buildChimney();
-const ground = buildGround();
-const road = buildRoad();
-
-//const car = createCar();
-
-
-
-
-//car animation from imported mesh
-// BABYLON.SceneLoader.ImportMeshAsync("", "https://assets.babylonjs.com/meshes/", "car.babylon").then(() =>  {
-//       const wheelRB = scene.getMeshByName("wheelRB");
-//       const wheelRF = scene.getMeshByName("wheelRF");
-//       const wheelLB = scene.getMeshByName("wheelLB");
-//       const wheelLF = scene.getMeshByName("wheelLF");
-//       console.log(wheelRB.animations)
-//       scene.beginAnimation(wheelRB, 0, 30, true);
-//       scene.beginAnimation(wheelRF, 0, 30, true);
-//       scene.beginAnimation(wheelLB, 0, 30, true);
-//       scene.beginAnimation(wheelLF, 0, 30, true);
-//     });
-
-//combining meshes withiut perserving material assiments
-// const house = BABYLON.Mesh.MergeMeshes([box, roof]);
+    BABYLON.SceneLoader.ImportMeshAsync("", "https://assets.babylonjs.com/meshes/", "village.glb");
     
-//combining meshes and perserving material assiments
-const house = BABYLON.Mesh.MergeMeshes([box, roof, chimney], true, false, null, false, true);
-
-house.position = new BABYLON.Vector3(8, 0, 12);
-//const house3 = buildHouse3();
-
-
-
-//create instance of house
-function buildHouse3(){
-   const house3 = house.createInstance("house3");
-   house3.position = new BABYLON.Vector3(8, 0, 12);
-
-}    
-    
- 
-    //SECOND HOUSE
-
-const boxMat2 = new BABYLON.StandardMaterial("boxMat2");
-boxMat2.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/cubehouse.png");
-
-
-    //options parameter to set different images on each side
-    const faceUV = [];
-    faceUV[0] = new BABYLON.Vector4(0.5, 0.0, 0.75, 1.0); //rear face
-    faceUV[1] = new BABYLON.Vector4(0.0, 0.0, 0.25, 1.0); //front face
-    faceUV[2] = new BABYLON.Vector4(0.25, 0, 0.5, 1.0); //right side
-    faceUV[3] = new BABYLON.Vector4(0.75, 0, 1.0, 1.0); //left side
-    // top 4 and bottom 5 not seen so not set
-    
-
-    /**** house2 *****/
-    const box2 = BABYLON.MeshBuilder.CreateBox("box", {faceUV: faceUV, wrap: true});
-    box2.material = boxMat2;
-    box2.position = new BABYLON.Vector3(3, 0.5, 0);
-
-    //roof2
-     const roof2 = BABYLON.MeshBuilder.CreateCylinder("roof", {diameter: 1.1, height: 1.1, tessellation: 3});
-    roof2.scaling.x = 0.7;
-     roof2.scaling.z = 1.2;
-    roof2.rotation.z = BABYLON.Tools.ToRadians(90);
-
-    roof2.position = new BABYLON.Vector3(3, 1.15, 0);
-
-    //roof2material
-    const roofMat2 = new BABYLON.StandardMaterial("roofMat");
-    roofMat2.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/roof.jpg", scene);
-    roof2.material = roofMat2;
-
-    const house2 = BABYLON.Mesh.MergeMeshes([box2, roof2], true, false, null, false, true);
-    house2.position.y = 0;
-    house2.position.z = -2.2;
-    house2.rotation.y = BABYLON.Tools.ToRadians(180);
-//CREATE MORE HOUSES WITH INSTANCES
-    const places = []; //each entry is an array [house type, rotation, x, z]
-    places.push([1, -Math.PI / 16, 2, 8]);
-    places.push([2, BABYLON.Tools.ToRadians(0), -4.5, 2.3 ]);
-    places.push([1, -Math.PI / 16, 2, 4 ]);
-    places.push([2, BABYLON.Tools.ToRadians(0), -3, 2.3 ]);
-
-        //Create instances from the first two that were built 
-        const houses = [];
-    for (let i = 0; i < places.length; i++) {
-        if (places[i][0] === 1) {
-            houses[i] = house.createInstance("house" + i + 5);
-        }
-        else {
-            houses[i] = house2.createInstance("house" + i + 5);
-        }
-        houses[i].rotation.y = places[i][1];
-        houses[i].position.x = places[i][2];
-        houses[i].position.z = places[i][3];
+    const walk = function (turn, dist) {
+        this.turn = turn;
+        this.dist = dist;
     }
-//CREATE CAR AND ANIMATE IT
-    //base
-    const outline = [
-        new BABYLON.Vector3(-0.3, 0, -0.1),
-        new BABYLON.Vector3(0.2, 0, -0.1),
-    ]
-    //curved front
-    for (let i = 0; i < 20; i++) {
-        outline.push(new BABYLON.Vector3(0.2 * Math.cos(i * Math.PI / 40), 0, 0.2 * Math.sin(i * Math.PI / 40) - 0.1));
-    }
-    //top
-    outline.push(new BABYLON.Vector3(0, 0, 0.1));
-    outline.push(new BABYLON.Vector3(-0.3, 0, 0.1));
-    //matirial
-    const carMat = new BABYLON.StandardMaterial("carMat");
-    carMat.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/car.png");
-
-    const faceUV2 = [];
-    faceUV2[0] = new BABYLON.Vector4(0, 0.5, 0.38, 1);
-    faceUV2[1] = new BABYLON.Vector4(0, 0, 1, 0.5);
-    faceUV2[2] = new BABYLON.Vector4(0.38, 1, 0, 0.5);
-
-    const car = BABYLON.MeshBuilder.ExtrudePolygon("car", {shape: outline, depth: 0.2, faceUV: faceUV2, wrap: true});
-    car.material = carMat;
-    car.position.y = 0.35;
-    car.position.x = -15;
-    car.position.z = -1;
-    car.rotation.x = BABYLON.Tools.ToRadians(-90);
-    car.scaling = new BABYLON.Vector3(2,2,2);
-
     
+    const track = [];
+    track.push(new walk(86, 7));
+    track.push(new walk(-85, 14.8));
+    track.push(new walk(-93, 16.5));
+    track.push(new walk(48, 25.5));
+    track.push(new walk(-112, 30.5));
+    track.push(new walk(-72, 33.2));
+    track.push(new walk(42, 37.5));
+    track.push(new walk(-98, 45.2));
+    track.push(new walk(0, 47))
 
-    //wheels
-
-    //wheel material
-    const wheelMat = new BABYLON.StandardMaterial("wheelMat");
-    wheelMat.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/wheel.png");
-
-    const wheelUV = [];
-    wheelUV[0] = new BABYLON.Vector4(0, 0, 1, 1);
-    wheelUV[1] = new BABYLON.Vector4(0, 0.5, 0, 0.5);
-    wheelUV[2] = new BABYLON.Vector4(0, 0, 1, 1);
-    
-    
-
-    const wheelRB = BABYLON.MeshBuilder.CreateCylinder("wheelRB", {diameter: 0.125, height: 0.05, faceUV: wheelUV});
-    wheelRB.material = wheelMat;
-    wheelRB.parent = car;
-    //positions based on a parent
-    wheelRB.position.z = -0.1;
-    wheelRB.position.x = -0.2;
-    wheelRB.position.y = 0.035;
-//wheel animation
-const animWheel = new BABYLON.Animation("wheelAnimation", "rotation.y", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-const wheelKeys = []; 
-//At the animation key 0, the value of rotation.y is 0
-wheelKeys.push({
-    frame: 0,
-    value: 0
-});
-//At the animation key 30, (after 1 sec since animation fps = 30) the value of rotation.y is 2PI for a complete rotation
-wheelKeys.push({
-    frame: 30,
-    value: 2 * Math.PI
-});
-
-//set the keys
-animWheel.setKeys(wheelKeys);
-//Link this animation to the right back wheel
-wheelRB.animations = [];
-wheelRB.animations.push(animWheel);
-    //we can clone a clone //When we clone a wheel its parent is made the parent of the clone
-    const wheelRF = wheelRB.clone("wheelRF");
-    wheelRF.position.x = 0.1;
-    
-    const wheelLB = wheelRB.clone("wheelLB");
-    wheelLB.position.y = -0.2 - 0.035;
-    
-    const wheelLF = wheelRF.clone("wheelLF");
-    wheelLF.position.y = -0.2 - 0.035;
-
-
-//Begin animation - object to animate, first frame, last frame and loop if true
-scene.beginAnimation(wheelRB, 0, 30, true);
-scene.beginAnimation(wheelRF, 0, 30, true);
-scene.beginAnimation(wheelLB, 0, 30, true);
-scene.beginAnimation(wheelLF, 0, 30, true);
-
-//car animation
-const animCar = new BABYLON.Animation("carAnimation", "position.x", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-const carKeys = []; 
-carKeys.push({
-    frame: 0,
-    value: -15
-});
-carKeys.push({
-    frame: 300,
-    value: 0
-});
-carKeys.push({
-    frame: 600,
-    value: 15
-});
-animCar.setKeys(carKeys);
-car.animations = [];
-car.animations.push(animCar);
-scene.onPointerDown = function (){
-    scene.beginAnimation(car, 0, 600, true);
-            
-        }
-
-// Dude
-BABYLON.SceneLoader.ImportMeshAsync("him", "/dudeWalking/scenes/Dude/", "Dude.babylon", scene).then((result) => {
+    // Dude
+    BABYLON.SceneLoader.ImportMeshAsync("him", "/scenes/Dude/", "Dude.babylon", scene).then((result) => {
         var dude = result.meshes[0];
-        dude.scaling = new BABYLON.Vector3(0.01, 0.01, 0.01);
-        dude.rotation.y = BABYLON.Tools.ToRadians(90);
-        dude.position.z = 1;
-        dude.position.x = 15;
-                
-        scene.beginAnimation(result.skeletons[0], 0, 100, true, 1.0);
-        //dude moving animation
-        const animDude = new BABYLON.Animation("dudeAnimation", "position.x", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-        const dudeKeys = []; 
-        dudeKeys.push({
-            frame: 0,
-            value: 15
-        });
-        dudeKeys.push({
-            frame: 600,
-            value: 5
-        });
-        animDude.setKeys(dudeKeys);
-        dude.animations = [];
-        dude.animations.push(animDude);
-        scene.onPointerDown = function (){
-            scene.beginAnimation(dude, 0, 600, true);
+        dude.scaling = new BABYLON.Vector3(0.008, 0.008, 0.008);
             
-        }
-        
-    });  
+        dude.position = new BABYLON.Vector3(-6, 0, 0);
+        dude.rotate(BABYLON.Axis.Y, BABYLON.Tools.ToRadians(-95), BABYLON.Space.LOCAL);
+        const startRotation = dude.rotationQuaternion.clone();    
+            
+        scene.beginAnimation(result.skeletons[0], 0, 100, true, 1.0);
 
+        let distance = 0;
+        let step = 0.015;
+        let p = 0;
 
-
-
-
-return scene;
-}
-                
-//BOX
-function buildBox(){
-    const box = BABYLON.MeshBuilder.CreateBox("box", {width: 2, height: 1.5, depth: 3});
-    box.rotation.y = BABYLON.Tools.ToRadians(0);
-    box.position.y = 0.75;
-    // After creation, and for meshes that do not have sizing options, changes in size are achieved by scaling the mesh.
-    // const box = BABYLON.MeshBuilder.CreateBox("box", {}); //unit cube
-    // box.scaling.x = 2;
-    // box.scaling.y = 1.5;
-    // box.scaling.z = 3;
-    // or
-    // box.scaling = new BABYLON.Vector3(2, 1.5, 3);
+        scene.onBeforeRenderObservable.add(() => {
+		    dude.movePOV(0, 0, step);
+            distance += step;
+              
+            if (distance > track[p].dist) {
+                    
+                dude.rotate(BABYLON.Axis.Y, BABYLON.Tools.ToRadians(track[p].turn), BABYLON.Space.LOCAL);
+                p +=1;
+                p %= track.length; 
+                if (p === 0) {
+                    distance = 0;
+                    dude.position = new BABYLON.Vector3(-6, 0, 0);
+                    dude.rotationQuaternion = startRotation.clone();
+                }
+            }
+			
+        })
+    });
     
-    // Position
-    // box.position.x = -2;
-    // box.position.y = 4.2;
-    // box.position.z = 0.1;
-     //box.position = new BABYLON.Vector3(-2, 4.2, 0.1);
-    
-    //  Orentation
-    //  box.rotation.y = Math.PI / 4;
-
-    //box material
-    const boxMat = new BABYLON.StandardMaterial("BOXMat");
-    boxMat.diffuseTexture = new BABYLON.Texture("https://www.babylonjs-playground.com/textures/floor.png");
-    box.material = boxMat;
-
-    return box;
-        
-}
-
-//ROOF   
-function buildRoof(){  
-            //create roof with a cilidar
-     const roof = BABYLON.MeshBuilder.CreateCylinder("roof", {diameter: 1.3, height: 3.1, tessellation: 3});
-    roof.scaling.x = 0.75;
-     roof.scaling.z = 2;
-    roof.rotation.z = BABYLON.Tools.ToRadians(90);
-    roof.rotation.y = BABYLON.Tools.ToRadians(90);
-    roof.position.y = 1.7;
-
-    //roofmaterial
-    const roofMat = new BABYLON.StandardMaterial("roofMat");
-    roofMat.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/roof.jpg", scene);
-    roof.material = roofMat;
-    return roof;
-}
-
-//CHIMNEY
-function buildChimney(){
-    const chimney = BABYLON.MeshBuilder.CreateBox("box", {width: 0.2, height: 0.5, depth: 0.2});  
-    chimney.position.x = 0.7;
-    chimney.position.y = 2;  
-    chimney.rotation.y = BABYLON.Tools.ToRadians(-45);  
-    
-    const chimneyMat = new BABYLON.StandardMaterial("roofMat");
-    chimneyMat.diffuseTexture = new BABYLON.Texture("https://www.babylonjs-playground.com/textures/floor.png");
-    chimney.material = chimneyMat;
-    return chimney;
-}
-
-//GROUND 
-function buildGround(){   
-    const ground = BABYLON.MeshBuilder.CreateGround("ground", {width:30, height:30});
-    //color of the ground
-    const groundMat = new BABYLON.StandardMaterial("groundMat");
-    groundMat.diffuseColor = new BABYLON.Color3(0,1,0); //rgb color
-    ground.material = groundMat; //Place the material property of the ground
-}
-//ROAD
-function buildRoad(){
-    const road = BABYLON.MeshBuilder.CreateGround("ground", {width:30, height:3});
-    const roadMat = new BABYLON.StandardMaterial("groundMat");
-    roadMat.diffuseColor = new BABYLON.Color3.Gray(); //rgb color
-    road.material = roadMat; //Place the material property of the ground
-    road.position = new BABYLON.Vector3(0, 0.01, 0);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//nesto sto bilo vec kad sam skinuo kod
+    return scene;
+};
                 var engine;
                 var scene;
                 initFunction = async function() {               
