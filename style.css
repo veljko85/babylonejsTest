@@ -49,7 +49,7 @@ h1 {
 #img3 {
     background-image: url("dinar1976face.png");
 }
-@media screen and (min-width: 1800px) {
+@media screen and (min-width: 1400px) {
 html, body {
                 overflow: hidden;
                 width: 100%;
