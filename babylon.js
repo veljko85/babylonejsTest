@@ -1,6 +1,9 @@
 /// <reference path='C:\Users\Veljko\Desktop\veljko\javaScript\babylonJS\babylon.d.ts' />
 
 var canvas = document.getElementById("renderCanvas");
+if (document.body.clientWidth < 768) {
+    canvas.style.height = document.body.clientWidth + "px";
+}
         var engine = null;
         var scene = null;
         var sceneToRender = null;
@@ -97,7 +100,7 @@ var canvas = document.getElementById("renderCanvas");
                 //cylinder.scaling = new BABYLON.Vector3(1, 1, 1);
                 cylinder.material = cylMat;
                 cylinder.rotation.x = Math.PI/2;
-                cylinder.addRotation(0, Math.PI, 0.7);
+                cylinder.addRotation(-0.7, Math.PI, 0.5);
         
                 //cylinder.material = new BABYLON.StandardMaterial("mat_", scene);
                 cylMat.diffuseTexture = new BABYLON.Texture("Yugoslav_1_dinar_1965.png")

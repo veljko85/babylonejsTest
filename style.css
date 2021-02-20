@@ -1,4 +1,56 @@
 html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to right,#E8CBC0 , #636FA4);
+}
+
+#renderCanvas {
+    width: 100%;
+    touch-action: none;
+    text-align: center;
+    /* float: right; */
+     margin: 050px 0 0 0;
+    /*remove border around canvas*/
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important; 
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; 
+    outline: none !important;
+}
+h1 {
+    text-align: center;
+    font-size: 30px;
+    color: rgb(163, 143, 30);
+}
+.container {
+    width: 100%;
+    height: 100px;
+    float: left;
+    margin: 0 0 0 0;
+    /* background-color: red; */
+}
+.img {
+    width: 100px;
+    height: 100px;
+    margin: 0 0 0 20px;
+    float: left;
+    -webkit-background-size: cover;
+        background-size: cover;
+        background-position: center;
+
+}
+#img1 {
+    background-image: url("dinar1965face.png");
+}
+#img2 {
+    background-image: url("dinar1915face.png");
+}
+#img3 {
+    background-image: url("dinar1976face.png");
+}
+@media screen and (min-width: 1800px) {
+html, body {
                 overflow: hidden;
                 width: 100%;
                 height: 100%;
@@ -47,3 +99,4 @@ html, body {
             #img3 {
                 background-image: url("dinar1976face.png");
             }
+}
