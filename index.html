@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-        <title>Babylon.js sample code</title>
+        <title>Babylon.js vezbanje</title>
 
         <!-- Babylon.js -->
         <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
@@ -20,121 +20,21 @@
         <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
         <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
         <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
-
-        <style>
-            html, body {
-                overflow: hidden;
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-
-            #renderCanvas {
-                width: 100%;
-                height: 100%;
-                touch-action: none;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
 <body>
+    <h1>Dinar</h1>
+<div class="container">
+    <div class="img" id="img1"></div>
+    <div class="img" id="img2"></div>
+    <div class="img" id="img3"></div>
+</div>
     <canvas id="renderCanvas"></canvas>
-    <script>
-        var canvas = document.getElementById("renderCanvas");
 
-        var engine = null;
-        var scene = null;
-        var sceneToRender = null;
-        var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
-        const createScene = function () {
-    
-    const scene = new BABYLON.Scene(engine);
+        
 
-    const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 1.5, Math.PI / 2.2, 15, new BABYLON.Vector3(0, 0, 0));
-    camera.attachControl(canvas, true);
-    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0));
+<script src="babylon.js"></script> 
 
-    BABYLON.SceneLoader.ImportMeshAsync("", "https://assets.babylonjs.com/meshes/", "village.glb");
-    
-    const walk = function (turn, dist) {
-        this.turn = turn;
-        this.dist = dist;
-    }
-    
-    const track = [];
-    track.push(new walk(86, 7));
-    track.push(new walk(-85, 14.8));
-    track.push(new walk(-93, 16.5));
-    track.push(new walk(48, 25.5));
-    track.push(new walk(-112, 30.5));
-    track.push(new walk(-72, 33.2));
-    track.push(new walk(42, 37.5));
-    track.push(new walk(-98, 45.2));
-    track.push(new walk(0, 47))
 
-    // Dude
-    BABYLON.SceneLoader.ImportMeshAsync("him", "/scenes/Dude/", "Dude.babylon", scene).then((result) => {
-        var dude = result.meshes[0];
-        dude.scaling = new BABYLON.Vector3(0.008, 0.008, 0.008);
-            
-        dude.position = new BABYLON.Vector3(-6, 0, 0);
-        dude.rotate(BABYLON.Axis.Y, BABYLON.Tools.ToRadians(-95), BABYLON.Space.LOCAL);
-        const startRotation = dude.rotationQuaternion.clone();    
-            
-        scene.beginAnimation(result.skeletons[0], 0, 100, true, 1.0);
-
-        let distance = 0;
-        let step = 0.015;
-        let p = 0;
-
-        scene.onBeforeRenderObservable.add(() => {
-		    dude.movePOV(0, 0, step);
-            distance += step;
-              
-            if (distance > track[p].dist) {
-                    
-                dude.rotate(BABYLON.Axis.Y, BABYLON.Tools.ToRadians(track[p].turn), BABYLON.Space.LOCAL);
-                p +=1;
-                p %= track.length; 
-                if (p === 0) {
-                    distance = 0;
-                    dude.position = new BABYLON.Vector3(-6, 0, 0);
-                    dude.rotationQuaternion = startRotation.clone();
-                }
-            }
-			
-        })
-    });
-    
-    return scene;
-};
-                var engine;
-                var scene;
-                initFunction = async function() {               
-                    var asyncEngineCreation = async function() {
-                        try {
-                        return createDefaultEngine();
-                        } catch(e) {
-                        console.log("the available createEngine function failed. Creating the default engine instead");
-                        return createDefaultEngine();
-                        }
-                    }
-
-                    engine = await asyncEngineCreation();
-        if (!engine) throw 'engine should not be null.';
-        scene = createScene();};
-        initFunction().then(() => {sceneToRender = scene        
-            engine.runRenderLoop(function () {
-                if (sceneToRender && sceneToRender.activeCamera) {
-                    sceneToRender.render();
-                }
-            });
-        });
-
-        // Resize
-        window.addEventListener("resize", function () {
-            engine.resize();
-        });
-    </script>
 </body>
 </html>
