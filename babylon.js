@@ -16,7 +16,7 @@ if (document.body.clientWidth < 768) {
             camera.setPosition(new BABYLON.Vector3(0, 0, -1.5));
             camera.attachControl(canvas, true);
         
-            var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0,0, 0), scene);
+            var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1,1, 0), scene);
         
             var urlList = [
                 "http://doc.babylonjs.com/",
