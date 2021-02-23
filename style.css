@@ -4,7 +4,8 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(to right,#E8CBC0 , #636FA4);
+    background-image: linear-gradient(to right,#202020 , #0c0c0c);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 #renderCanvas {
@@ -21,7 +22,7 @@ html, body {
 h1 {
     text-align: center;
     font-size: 30px;
-    color: rgb(163, 143, 30);
+    color: #FFD700;
 }
 .container {
     width: 100%;
@@ -40,14 +41,18 @@ h1 {
         background-position: center;
 
 }
+h2 {
+    text-align: center;
+    font-size: 18px;
+}
 #img1 {
-    background-image: url("dinar1965face.png");
+    background-image: url("bitcoin.png");
 }
 #img2 {
-    background-image: url("dinar1915face.png");
+    background-image: url("ethereum.png");
 }
 #img3 {
-    background-image: url("dinar1976face.png");
+    background-image: url("ripple.png");
 }
 @media screen and (min-width: 1400px) {
 html, body {

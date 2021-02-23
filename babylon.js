@@ -16,18 +16,14 @@ if (document.body.clientWidth < 768) {
             camera.setPosition(new BABYLON.Vector3(0, 0, -1.5));
             camera.attachControl(canvas, true);
         
-            var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1,1, 0), scene);
+            var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
         
-            var urlList = [
-                "http://doc.babylonjs.com/",
-                "http://www.babylonjs.com/",
-                "https://github.com/BabylonJS/Babylon.js/",
-            ];
+            light.intensity = 5;
         
             var textures = [
-                "Yugoslav_1_dinar_1965.png",
-                "1_dinar_RSD_(1904-1915).png",
-                "Yugoslavia_1_dinar_1976_FAO.png"
+                "bitcoin.png",
+                "ethereum.png",
+                "ripple.png"
         
             ];
             //make change on click outside of canvas
@@ -91,19 +87,19 @@ if (document.body.clientWidth < 768) {
                 
 
                 const faceUV2 = [];
-                faceUV2[0] = new BABYLON.Vector4(0.5, 0.0, 1, 1);
+                faceUV2[0] = new BABYLON.Vector4(0, 0.0, 1, 1);
                 faceUV2[1] = new BABYLON.Vector4(0.5, 0.0, 1, 1);
-                faceUV2[2] = new BABYLON.Vector4(0, 0, 0.5, 1);
+                faceUV2[2] = new BABYLON.Vector4(0, 0, 1, 1);
                 
 
-                var cylinder  = BABYLON.MeshBuilder.CreateCylinder(0, {radius: 0.5, height: 0.05, faceUV: faceUV2}, scene);
+                var cylinder  = BABYLON.MeshBuilder.CreateCylinder(0, {height: 0.05, tessellation: 48, faceUV: faceUV2}, scene);
                 //cylinder.scaling = new BABYLON.Vector3(1, 1, 1);
                 cylinder.material = cylMat;
                 cylinder.rotation.x = Math.PI/2;
                 cylinder.addRotation(-0.7, Math.PI, 0.5);
         
                 //cylinder.material = new BABYLON.StandardMaterial("mat_", scene);
-                cylMat.diffuseTexture = new BABYLON.Texture("Yugoslav_1_dinar_1965.png")
+                cylMat.diffuseTexture = new BABYLON.Texture("bitcoin.png")
                 // add actionManager on each cyl
                 cylinder.actionManager = new BABYLON.ActionManager(scene);
                 // register 'pickCylinder' as the handler function for cylinder picking action.
