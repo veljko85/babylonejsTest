@@ -15,6 +15,9 @@ if (document.body.clientWidth < 768) {
             var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
             camera.setPosition(new BABYLON.Vector3(0, 0, -1.5));
             camera.attachControl(canvas, true);
+            //disable zoom
+            camera.lowerRadiusLimit = camera.upperRadiusLimit = camera.radius = 1.5; 
+     
         
             var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
         
