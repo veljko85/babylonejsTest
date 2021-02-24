@@ -17,7 +17,6 @@ if (document.body.clientWidth < 768) {
             camera.attachControl(canvas, true);
             //disable zoom
             camera.lowerRadiusLimit = camera.upperRadiusLimit = camera.radius = 1.5; 
-     
         
             var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
         
@@ -91,15 +90,15 @@ if (document.body.clientWidth < 768) {
 
                 const faceUV2 = [];
                 faceUV2[0] = new BABYLON.Vector4(0, 0.0, 1, 1);
-                faceUV2[1] = new BABYLON.Vector4(0.5, 0.0, 1, 1);
+                faceUV2[1] = new BABYLON.Vector4(0.49, 0.49, 0.5, 0.5);
                 faceUV2[2] = new BABYLON.Vector4(0, 0, 1, 1);
                 
 
                 var cylinder  = BABYLON.MeshBuilder.CreateCylinder(0, {height: 0.05, tessellation: 48, faceUV: faceUV2}, scene);
                 //cylinder.scaling = new BABYLON.Vector3(1, 1, 1);
                 cylinder.material = cylMat;
-                cylinder.rotation.x = Math.PI/2;
-                cylinder.addRotation(-0.7, Math.PI, 0.5);
+ 
+                cylinder.addRotation(-1.2, 0, 0.5);
         
                 //cylinder.material = new BABYLON.StandardMaterial("mat_", scene);
                 cylMat.diffuseTexture = new BABYLON.Texture("bitcoin.png")

@@ -61,7 +61,7 @@ html, body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
-                background-image: linear-gradient(to right,#E8CBC0 , #636FA4);
+                
             }
 
             #renderCanvas {
@@ -78,7 +78,7 @@ html, body {
             h1 {
                 text-align: center;
                 font-size: 70px;
-                color: rgb(163, 143, 30);
+
             }
             .container {
                 width: 100px;
@@ -95,13 +95,5 @@ html, body {
                     background-position: center;
 
             }
-            #img1 {
-                background-image: url("dinar1965face.png");
-            }
-            #img2 {
-                background-image: url("dinar1915face.png");
-            }
-            #img3 {
-                background-image: url("dinar1976face.png");
-            }
+
 }
