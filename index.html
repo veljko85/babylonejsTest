@@ -39,11 +39,19 @@
                 touch-action: none;
                 position: fixed;
             }
+            #cover {
+                width: 100vw;
+                height: 2000px;
+                position: absolute;
+                background-color: rgba(252, 64, 64, 0);
+                z-index: 100;
+                display: none;
+            }
 
         </style>
     </head>
 <body>
-
+    <div id='cover'></div>
     <canvas id="renderCanvas"></canvas>
     <script>
         var canvas = document.getElementById("renderCanvas");
@@ -134,7 +142,10 @@ BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/veljk
 			keyActionParam.anim._slider = slider;
 			slider.value = keyActionParam.weight;
 
-  //animation on scroll          
+  //animation on scroll      
+  if (document.body.clientWidth < 768){
+      cover.style.display = 'block';
+  }  
 let max = document.body.scrollHeight - innerHeight;
 document.addEventListener("scroll", function(){
     // console.log((pageYOffset / max) * 1);
